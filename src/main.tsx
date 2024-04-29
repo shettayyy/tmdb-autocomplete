@@ -11,12 +11,13 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App.tsx';
 import ToastProvider from './contexts/toastify.tsx';
+import { showToast } from './utils/toast.ts';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
       if (query?.meta?.toast) {
-        console.error(error);
+        showToast('error', error.message);
       }
     },
   }),
