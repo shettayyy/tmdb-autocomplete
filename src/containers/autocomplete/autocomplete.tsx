@@ -6,24 +6,38 @@ import useAutocomplete from '@/hooks/autocomplete';
 
 import styles from './autocomplete.module.css';
 
-export const Autocomplete: React.FC = () => {
-  const { query, autocompleteResults, handleQueryChange, handleSelect } =
-    useAutocomplete();
+interface AutocompleteProps {
+  query: string;
+  selectedQuery: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSelect: (selectedQuery: string) => void;
+}
+
+export const Autocomplete: React.FC<AutocompleteProps> = ({
+  query,
+  selectedQuery,
+  onChange,
+  onSelect,
+}) => {
+  const { autocompleteResults } = useAutocomplete({
+    query,
+    selectedQuery,
+  });
 
   // Handle selection of the movie name query
-  const onSelect = useCallback(
+  const handleSelect = useCallback(
     (movieName: string) => () => {
-      handleSelect(movieName);
+      onSelect(movieName);
     },
-    [handleSelect],
+    [onSelect],
   );
 
   // Handle Enter key press
   const onEnter = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      onSelect((event.target as HTMLInputElement).value)();
+      handleSelect((event.target as HTMLInputElement).value)();
     },
-    [onSelect],
+    [handleSelect],
   );
 
   const renderItem = (item: Movie) => {
@@ -37,7 +51,7 @@ export const Autocomplete: React.FC = () => {
 
     return (
       <li key={item.id} className={styles.item}>
-        <button onClick={onSelect(movieName)}>
+        <button onClick={handleSelect(movieName)}>
           {movieName}
 
           {releaseDate}
@@ -48,7 +62,7 @@ export const Autocomplete: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Search query={query} onChange={handleQueryChange} onEnter={onEnter} />
+      <Search query={query} onChange={onChange} onEnter={onEnter} />
 
       <ul className={styles.list}>{autocompleteResults.map(renderItem)}</ul>
     </div>

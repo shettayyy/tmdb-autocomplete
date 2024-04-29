@@ -1,12 +1,12 @@
 import { Header } from './components/layout/header';
-import { Dashboard } from './containers/dashboard/dashboard';
+import { MovieList } from './containers/movie-list/movie-list';
 
 function App() {
   return (
     <>
       <Header />
 
-      <Dashboard />
+      <MovieList />
     </>
   );
 }

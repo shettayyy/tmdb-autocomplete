@@ -1,48 +1,39 @@
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { fetchMultiSearch, SEARCH_URL } from '@/services/movies';
+import { fetchMultiSearchInfinite, SEARCH_URL } from '@/services/movies';
 
 import useDebounce from './debounce';
 
-const useAutocomplete = () => {
-  const [query, setQuery] = useState<string>('');
-  const [selected, setSelected] = useState<string>('');
+interface AutocompleteProps {
+  query: string;
+  selectedQuery: string;
+}
+
+const useAutocomplete = (props: AutocompleteProps) => {
+  const { query, selectedQuery } = props;
   const debouncedQuery = useDebounce<string>(query, 500);
 
   // Fetch multi search results for autocomplete
-  const { data } = useQuery({
+  const { data } = useInfiniteQuery({
     queryKey: [SEARCH_URL, debouncedQuery],
-    queryFn: fetchMultiSearch,
-    enabled: debouncedQuery.trim() !== '' && !selected,
+    queryFn: fetchMultiSearchInfinite,
+    initialPageParam: 1,
+    getNextPageParam: response =>
+      response.data.total_pages > response.data.page
+        ? response.data.page + 1
+        : undefined,
+    getPreviousPageParam: response =>
+      response.data.page > 1 ? response.data.page - 1 : undefined,
+    enabled: debouncedQuery.trim() !== '' && !selectedQuery,
     refetchOnWindowFocus: false,
   });
 
-  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelected(prevSelected => {
-      if (prevSelected && event.target.value !== '') {
-        setSelected('');
-      }
-
-      return prevSelected;
-    });
-
-    setQuery(event.target.value);
-  };
-
-  const handleSelect = (selectedItem: string) => {
-    setQuery(selectedItem);
-    setSelected(selectedItem);
-  };
-
   // Final result
-  const autocompleteResults = data?.data?.results?.slice(0, 5) ?? [];
+  const autocompleteResults = selectedQuery
+    ? []
+    : data?.pages.flatMap(page => page.data.results)?.slice(0, 5) ?? [];
 
   return {
-    query,
-    handleQueryChange,
-    selected,
-    handleSelect,
     autocompleteResults,
   };
 };
