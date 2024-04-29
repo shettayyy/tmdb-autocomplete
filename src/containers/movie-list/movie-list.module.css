@@ -1,0 +1,12 @@
+.main {
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+
+  @media (min-width: 640px) {
+    padding-left: 0.5rem /* 8px */;
+    padding-right: 0.5rem /* 8px */;
+  }
+}

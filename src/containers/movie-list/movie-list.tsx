@@ -5,6 +5,7 @@ import { InfiniteScroll } from '@/components/core/infinite-scroll/infinite-scrol
 import { useMovies } from '@/hooks/movies';
 
 import { Autocomplete } from '../autocomplete/autocomplete';
+import styles from './movie-list.module.css';
 
 export const MovieList: React.FC = () => {
   const [query, setQuery] = useState<string>('');
@@ -51,7 +52,7 @@ export const MovieList: React.FC = () => {
   }, []);
 
   return (
-    <main>
+    <main className={`container ${styles.main}`}>
       <Autocomplete
         query={query}
         selectedQuery={selectedQuery}

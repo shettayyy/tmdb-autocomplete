@@ -1,0 +1,25 @@
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-neutral-1);
+  outline: none;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: var(--color-text-accent-2);
+  width: 1.5rem;
+  height: 1.5rem;
+}

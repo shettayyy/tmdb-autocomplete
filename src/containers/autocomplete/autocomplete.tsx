@@ -61,7 +61,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container}`}>
       <Search query={query} onChange={onChange} onEnter={onEnter} />
 
       <ul className={styles.list}>{autocompleteResults.map(renderItem)}</ul>

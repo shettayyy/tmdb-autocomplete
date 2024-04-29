@@ -4,6 +4,7 @@
   --color-bg-neutral-2: rgba(23, 23, 23, 1);
   --color-text-primary: rgba(255, 255, 255, 1);
   --color-text-accent-1: #ff0000;
+  --color-text-accent-2: rgba(255, 255, 255, 0.5);
 }
 
 /* Reset CSS */
