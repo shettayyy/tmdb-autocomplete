@@ -1,7 +1,9 @@
+import { Autocomplete } from '../autocomplete/autocomplete';
+
 export const Dashboard: React.FC = () => {
   return (
     <main>
-      <h1>Dashboard</h1>
+      <Autocomplete />
     </main>
   );
 };
