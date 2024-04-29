@@ -12,21 +12,19 @@ export const MovieList: React.FC = () => {
   const [query, setQuery] = useState<string>('');
   const [selectedQuery, setSelectedQuery] = useState<string>('');
 
-  const { results, isEmpty, isLoading, loadNextPage } =
-    useMovies(selectedQuery);
+  const { results, isEmpty, isLoading, loadNextPage } = useMovies(
+    query,
+    selectedQuery,
+  );
 
   // Handle search query change event for autocomplete
   const handleQueryChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSelectedQuery(prevSelected => {
-        if (prevSelected && event.target.value !== '') {
-          return '';
-        }
-
-        return prevSelected;
-      });
-
       setQuery(event.target.value);
+
+      if (event.target.value === '') {
+        setSelectedQuery('');
+      }
     },
     [],
   );
@@ -49,7 +47,6 @@ export const MovieList: React.FC = () => {
     <main className={`container ${styles.main}`}>
       <Autocomplete
         query={query}
-        selectedQuery={selectedQuery}
         onChange={handleQueryChange}
         onSelect={handleSelect}
       />

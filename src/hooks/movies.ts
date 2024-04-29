@@ -7,7 +7,7 @@ import {
   SEARCH_URL,
 } from '@/services/movies';
 
-export const useMovies = (selected: string) => {
+export const useMovies = (query: string, selected: string) => {
   // Fetch discover movies when no query is present
   const {
     data: discoverData,
@@ -54,9 +54,10 @@ export const useMovies = (selected: string) => {
     },
   });
 
-  const results = selected
-    ? selectedData?.pages.flatMap(page => page.data.results) ?? []
-    : discoverData?.pages.flatMap(page => page.data.results) ?? [];
+  const results =
+    selected && query
+      ? selectedData?.pages.flatMap(page => page.data.results) ?? []
+      : discoverData?.pages.flatMap(page => page.data.results) ?? [];
 
   const isDataEmpty =
     !isDiscoverLoading && !isSelectedLoading && !results?.length;

@@ -8,20 +8,17 @@ import styles from './autocomplete.module.css';
 
 interface AutocompleteProps {
   query: string;
-  selectedQuery: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelect: (selectedQuery: string) => void;
 }
 
 export const Autocomplete: React.FC<AutocompleteProps> = ({
   query,
-  selectedQuery,
   onChange,
   onSelect,
 }) => {
   const { autocompleteResults } = useAutocomplete({
     query,
-    selectedQuery,
   });
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
 
@@ -38,6 +35,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   const handleSelect = useCallback(
     (movieName: string) => () => {
       onSelect(movieName);
+      setIsListOpen(false);
     },
     [onSelect],
   );
