@@ -39,8 +39,9 @@ export const MovieList: React.FC = () => {
     loadNextPage();
   };
 
-  const renderMovie = useCallback((result: Movie) => {
-    return <MovieCard key={result.id} movie={result} />;
+  const renderMovie = useCallback((result: Movie, index: number) => {
+    // The API sometimes returns a movie with the same ID
+    return <MovieCard key={`${result.id}+${index}`} movie={result} />;
   }, []);
 
   return (
