@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { Movie } from '@/app-types/movie';
+import { MovieCard } from '@/components/app-specific/movie/movie-card';
 import { InfiniteScroll } from '@/components/core/infinite-scroll/infinite-scroll';
 import { useMovies } from '@/hooks/movies';
 
@@ -41,14 +42,7 @@ export const MovieList: React.FC = () => {
   };
 
   const renderMovie = useCallback((result: Movie) => {
-    const movieName =
-      result.name ??
-      result.original_name ??
-      result.title ??
-      result.original_title ??
-      'Unknown';
-
-    return <li key={result.id}>{movieName}</li>;
+    return <MovieCard key={result.id} movie={result} />;
   }, []);
 
   return (
@@ -62,7 +56,9 @@ export const MovieList: React.FC = () => {
 
       {isLoading && <p>Loading...</p>}
       {isEmpty && <p>No results found</p>}
-      {!isLoading && !isEmpty && <ul>{results.map(renderMovie)}</ul>}
+      {!isLoading && !isEmpty && (
+        <ul className={styles.list}>{results.map(renderMovie)}</ul>
+      )}
 
       <InfiniteScroll onIntersect={handleIntersect} />
     </main>

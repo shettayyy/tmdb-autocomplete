@@ -1,0 +1,43 @@
+.movieCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  background-color: var(--color-bg-neutral-1);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
+
+.posterContainer {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.poster {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.movieName {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+.overview {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  text-align: left;
+}
