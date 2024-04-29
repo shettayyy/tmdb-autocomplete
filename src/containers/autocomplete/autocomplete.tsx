@@ -7,13 +7,23 @@ import useAutocomplete from '@/hooks/autocomplete';
 import styles from './autocomplete.module.css';
 
 export const Autocomplete: React.FC = () => {
-  const { query, result, handleQueryChange, handleSelect } = useAutocomplete();
+  const { query, autocompleteResults, handleQueryChange, handleSelect } =
+    useAutocomplete();
 
+  // Handle selection of the movie name query
   const onSelect = useCallback(
     (movieName: string) => () => {
       handleSelect(movieName);
     },
     [handleSelect],
+  );
+
+  // Handle Enter key press
+  const onEnter = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      onSelect((event.target as HTMLInputElement).value)();
+    },
+    [onSelect],
   );
 
   const renderItem = (item: Movie) => {
@@ -38,9 +48,9 @@ export const Autocomplete: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Search query={query} setQuery={handleQueryChange} />
+      <Search query={query} onChange={handleQueryChange} onEnter={onEnter} />
 
-      <ul className={styles.list}>{result.map(renderItem)}</ul>
+      <ul className={styles.list}>{autocompleteResults.map(renderItem)}</ul>
     </div>
   );
 };
