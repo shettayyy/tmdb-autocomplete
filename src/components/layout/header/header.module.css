@@ -1,0 +1,40 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--color-bg-neutral-1);
+}
+
+.wrapper {
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (min-width: 640px) {
+    padding-left: 0.5rem /* 8px */;
+    padding-right: 0.5rem /* 8px */;
+  }
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+}
+
+.tagline {
+  font-size: 0.85rem;
+
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
+}
+
+.heart {
+  color: var(--color-text-accent-1);
+}
+
+.companyName {
+  color: var(--color-text-primary);
+}

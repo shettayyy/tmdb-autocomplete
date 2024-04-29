@@ -1,3 +1,11 @@
+/* Add colors */
+:root {
+  --color-bg-neutral-1: rgba(38, 38, 38, 1);
+  --color-bg-neutral-2: rgba(23, 23, 23, 1);
+  --color-text-primary: rgba(255, 255, 255, 1);
+  --color-text-accent-1: #ff0000;
+}
+
 /* Reset CSS */
 html {
   font-size: 16px;
@@ -22,6 +30,42 @@ body {
   font-weight: 400;
   font-style: normal;
   font-variation-settings: 'slnt' 0;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-neutral-2);
+}
+
+.container {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+.img {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Custom CSS */

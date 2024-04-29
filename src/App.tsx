@@ -1,4 +1,4 @@
-import { Header } from './components/layout/header';
+import { Header } from './components/layout/header/header';
 import { MovieList } from './containers/movie-list/movie-list';
 
 function App() {
