@@ -24,17 +24,31 @@ const fetchMultiSearch = async ({
 
 const useAutocomplete = () => {
   const [query, setQuery] = useState<string>('');
+  const [selected, setSelected] = useState<string>('');
   const debouncedQuery = useDebounce<string>(query, 500);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: [SEARCH_URL, debouncedQuery],
     queryFn: fetchMultiSearch,
-    enabled: debouncedQuery.trim() !== '',
+    enabled: debouncedQuery.trim() !== '' && !selected,
     refetchOnWindowFocus: false,
   });
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelected(prevSelected => {
+      if (prevSelected && event.target.value !== '') {
+        setSelected('');
+      }
+
+      return prevSelected;
+    });
+
     setQuery(event.target.value);
+  };
+
+  const handleSelect = (selectedItem: string) => {
+    setQuery(selectedItem);
+    setSelected(selectedItem);
   };
 
   // Final result
@@ -47,6 +61,8 @@ const useAutocomplete = () => {
     isLoading,
     isError,
     isEmpty: isDataEmpty,
+    selected,
+    handleSelect,
     handleQueryChange,
   };
 };
