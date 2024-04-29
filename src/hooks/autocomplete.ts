@@ -26,6 +26,9 @@ const useAutocomplete = (props: AutocompleteProps) => {
       response.data.page > 1 ? response.data.page - 1 : undefined,
     enabled: debouncedQuery.trim() !== '' && !selectedQuery,
     refetchOnWindowFocus: false,
+    meta: {
+      toast: true,
+    },
   });
 
   // Final result

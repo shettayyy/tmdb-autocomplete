@@ -26,6 +26,9 @@ export const useMovies = (selected: string) => {
       response.data.page > 1 ? response.data.page - 1 : undefined,
     enabled: !selected,
     refetchOnWindowFocus: false,
+    meta: {
+      toast: true,
+    },
   });
 
   // Fetch the result from the selected item
@@ -46,6 +49,9 @@ export const useMovies = (selected: string) => {
       response.data.page > 1 ? response.data.page - 1 : undefined,
     enabled: !!selected,
     refetchOnWindowFocus: false,
+    meta: {
+      toast: true,
+    },
   });
 
   const results = selected
