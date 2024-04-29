@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Movie } from '@/app-types/movie';
 import { Search } from '@/components/core/search/search';
@@ -21,6 +21,8 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
     query,
   });
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
+  const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+  const listRef = useRef<HTMLUListElement>(null);
 
   // Close the list when clicking outside
   const handleDocumentClick = useCallback((event: MouseEvent) => {
@@ -40,10 +42,55 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
     [onSelect],
   );
 
-  // Handle input focus to show the list
+  // Handle input focus to show the list and start navigation
   const handleInputFocus = useCallback(() => {
     setIsListOpen(true);
+    // Focus the autocomplete list when the input is focused
+    if (listRef.current) {
+      listRef.current.focus();
+    }
   }, []);
+
+  // Handle navigation with arrow keys
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement | HTMLUListElement>) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          event.preventDefault();
+          setFocusedIndex(prevIndex =>
+            prevIndex > 0 ? prevIndex - 1 : prevIndex,
+          );
+          break;
+        case 'ArrowDown':
+          event.preventDefault();
+          setFocusedIndex(prevIndex =>
+            prevIndex < autocompleteResults.length - 1
+              ? prevIndex + 1
+              : prevIndex,
+          );
+          break;
+        case 'Enter':
+          event.preventDefault();
+          if (
+            focusedIndex !== -1 &&
+            focusedIndex < autocompleteResults.length
+          ) {
+            const selectedMovie = autocompleteResults[focusedIndex];
+            const movieName =
+              selectedMovie.name ??
+              selectedMovie.title ??
+              selectedMovie.original_name ??
+              selectedMovie.original_title ??
+              'Unknown';
+            handleSelect(movieName)();
+          }
+          break;
+        default:
+          break;
+      }
+    },
+    [autocompleteResults, focusedIndex, handleSelect],
+  );
 
   // Handle Enter key press
   const onEnter = useCallback(
@@ -54,7 +101,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   );
 
   const renderItem = useCallback(
-    (item: Movie) => {
+    (item: Movie, index: number) => {
       const movieName =
         item.name ??
         item.title ??
@@ -68,7 +115,12 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
 
       return (
         <li key={item.id} className={styles.item}>
-          <button onClick={handleSelect(movieName)} className={styles.itemBtn}>
+          <button
+            onClick={handleSelect(movieName)}
+            className={`${styles.itemBtn} ${
+              focusedIndex === index ? styles.itemHighlight : ''
+            }`}
+          >
             <span className={styles.itemName}>
               {segments.map((segment, index) => (
                 <span
@@ -91,7 +143,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
         </li>
       );
     },
-    [handleSelect, query],
+    [focusedIndex, handleSelect, query],
   );
 
   useEffect(() => {
@@ -102,17 +154,29 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
     };
   }, [handleDocumentClick]);
 
+  useEffect(() => {
+    setFocusedIndex(-1); // Reset focused index when the list opens or closes
+  }, [isListOpen]);
+
   return (
     <div className={`${styles.container}`}>
       <Search
         query={query}
         onChange={onChange}
         onEnter={onEnter}
+        onKeyDown={handleKeyDown}
         onFocus={handleInputFocus}
       />
 
       {isListOpen && (
-        <ul className={styles.list}>{autocompleteResults.map(renderItem)}</ul>
+        <ul
+          ref={listRef}
+          onKeyDown={handleKeyDown}
+          className={styles.list}
+          tabIndex={0}
+        >
+          {autocompleteResults.map(renderItem)}
+        </ul>
       )}
     </div>
   );

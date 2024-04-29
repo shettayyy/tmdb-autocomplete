@@ -6,6 +6,7 @@ export interface SearchProps {
   query: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onEnter?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
 }
 
@@ -14,6 +15,7 @@ export const Search: React.FC<SearchProps> = ({
   onChange,
   onEnter,
   onFocus,
+  onKeyDown,
 }) => {
   const handleEnter = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -33,6 +35,7 @@ export const Search: React.FC<SearchProps> = ({
         value={query}
         onChange={onChange}
         onKeyUp={handleEnter}
+        onKeyDown={onKeyDown}
         onFocus={onFocus}
         placeholder="Search movies..."
         className={styles.input}
