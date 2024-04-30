@@ -22,11 +22,22 @@ export const MovieCard: React.FC<MovieProps> = ({ movie }) => {
   return (
     <div className={styles.movieCard}>
       <div className={styles.posterContainer}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movieName}
-          className={styles.poster}
-        />
+        {
+          // Display the movie poster if available
+          movie.poster_path ? (
+            <img
+              className={styles.poster}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={`Poster for ${movieName}`}
+            />
+          ) : (
+            <img
+              className={styles.poster}
+              src="https://via.placeholder.com/500X750"
+              alt="Placeholder for missing movie poster"
+            />
+          )
+        }
       </div>
 
       <div className={styles.info}>
