@@ -44,6 +44,39 @@ export const MovieList: React.FC = () => {
     return <MovieCard key={`${result.id}+${index}`} movie={result} />;
   }, []);
 
+  const renderPlaceholderCards = () => {
+    return (
+      <ul className={styles.list}>
+        {Array.from({ length: 10 }).map((_, index) => (
+          <MovieCard
+            movie={{
+              id: index,
+              name: '',
+              original_name: '',
+              title: '',
+              original_title: '',
+              overview: '',
+              poster_path: '',
+              backdrop_path: '',
+              adult: false,
+              genre_ids: [],
+              popularity: 0,
+              vote_average: 0,
+              media_type: '',
+              release_date: '',
+              origin_country: [],
+              original_language: '',
+              vote_count: 0,
+              first_air_date: '',
+            }}
+            key={index}
+            isLoading
+          />
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <main className={`container ${styles.main}`}>
       <Autocomplete
@@ -52,7 +85,7 @@ export const MovieList: React.FC = () => {
         onSelect={handleSelect}
       />
 
-      {isLoading && <p>Loading...</p>}
+      {isLoading && renderPlaceholderCards()}
       {isEmpty && <p>No results found</p>}
       {!isLoading && !isEmpty && (
         <ul className={styles.list}>{results.map(renderMovie)}</ul>

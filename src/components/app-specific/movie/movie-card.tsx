@@ -4,9 +4,10 @@ import styles from './movie-card.module.css';
 
 export interface MovieProps {
   movie: Movie;
+  isLoading?: boolean;
 }
 
-export const MovieCard: React.FC<MovieProps> = ({ movie }) => {
+export const MovieCard: React.FC<MovieProps> = ({ movie, isLoading }) => {
   const movieName =
     movie.name ??
     movie.original_name ??
@@ -18,6 +19,21 @@ export const MovieCard: React.FC<MovieProps> = ({ movie }) => {
   // Ellipsis for long overview, cutting off at 200 characters
   const overviewText =
     overview.length > 200 ? `${overview.slice(0, 200)}...` : overview;
+
+  if (isLoading) {
+    // Show facebook like skeleton loader
+    return (
+      <div className={styles.movieCard}>
+        <div className={styles.posterContainer}>
+          <div className={styles.posterSkeleton} />
+        </div>
+        <div className={styles.info}>
+          <div className={styles.movieNameSkeleton} />
+          <div className={styles.overviewSkeleton} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.movieCard}>
