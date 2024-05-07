@@ -1,8 +1,8 @@
-# Deel Autocomplete
+# TMDB Autocomplete
 
 ---
 
-Deel Autocomplete is a React component that provides a dropdown list of suggestions based on the user's input.
+TMDB Autocomplete is a React component that provides a dropdown list of suggestions based on the user's input.
 
 <!-- TABLE OF CONTENTS -->
 
@@ -32,7 +32,7 @@ Deel Autocomplete is a React component that provides a dropdown list of suggesti
 
 ## About The Project
 
-Deel Autocomplete is a React component that provides a dropdown list of suggestions based on the user's input. The component is built using React and Typescript and is designed to be used as a controlled component. The project is built to be reviewed as an assignment for the Deel Frontend Engineer role. For the sake of this assignment, we'll be using the TMDB API to fetch movie suggestions based on the user's input.
+TMDB Autocomplete is a React component that provides a dropdown list of suggestions based on the user's input. The component is built using React and Typescript and is designed to be used as a controlled component. We'll be using the TMDB API to fetch movie suggestions based on the user's input.
 
 Features:
 
@@ -45,8 +45,6 @@ Features:
 - 🚀 Optimized for performance
 - 📚 Well-documented code
 - 📝 Linted code using ESLint and Prettier
-
-DEMO: [Deel Autocomplete](https://deel-autocomplete.vercel.app/)
 
 ### Built With
 
@@ -144,5 +142,3 @@ I am using ESLint, Typescript and Prettier to lint the code. The code is linted 
 ## Contributor
 
 - [Shettayyy](https://github.com/shettayyy)
-
-Made with ❤️ for Deel
